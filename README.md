@@ -1,29 +1,39 @@
 # 微信读书笔记工作台
 
-把微信读书的划线/想法同步为 Obsidian 原生 Markdown 笔记，并提供可视化书架、笔记阅读界面的本地 Web 应用。
+把微信读书的划线/想法同步为 **Obsidian 原生 Markdown 笔记**的本地 Web 应用：可视化书架、笔记阅读、二次编辑、AI 对话延伸、阅读热力图、同段读者共鸣。数据 100% 在你本地，这个工具只是你 Obsidian 库的「另一个窗口」。
 
-配套文档：[项目说明.md](./项目说明.md)（架构/机制/规范/踩坑/维护，**最全**）· [PRD.md](./PRD.md)（产品需求）
-
-当前进度：**M1–M4 + 二期（F7 旧笔记导入 / F8 全库搜索 / 热力图 / F9 同段共鸣）全部完成**。
+配套文档：[项目说明.md](./项目说明.md)（架构/机制/规范/踩坑/维护，**最全**）· [PRD.md](./PRD.md)（产品需求）· [LICENSE](./LICENSE)（MIT）
 
 ## 快速开始
 
-**日常使用**：双击 `启动读书工作台.bat`（首次自动安装依赖、构建前端、生成配置），浏览器打开 http://localhost:5175
-
-**新设备安装**（多设备同步约定）：
+**要求**：Node.js ≥ 20 · 一个 Obsidian 库（也可以先没有，用任意空文件夹）· 微信读书 API key（见下方教程）
 
 ```bash
-# 1. 把两个仓库克隆到同一个父目录下（关键：必须并排，配置默认按 ../ 相对路径找库）
-git clone git@github.com:jonsins202/weread-workbench.git
-git clone git@github.com:jonsins202/obsidian.git obsidian_cangku
-
-# 2. 配置 API key（每台设备一次，微信读书 App → 设置 → 微信读书 Skill 获取）
-#    写入 ~/.bashrc： export WEREAD_API_KEY="wrk-xxxx"
-
-# 3. 双击 启动读书工作台.bat —— 缺什么自动补什么
+git clone https://github.com/jonsins202/weread-workbench.git
+cd weread-workbench
+双击 启动读书工作台.bat        # Windows；Mac/Linux 用 npm install && npm --prefix web install && npm --prefix web run build && npm start
 ```
 
-**多设备同步纪律**：开工前 `git pull`（两个仓库都拉），收工后 `git push`。划线/想法等服务器管理的内容在任何设备重新同步即自动收敛；git 真正保护的是你的💭思考、AI 批注等创作内容。`config.json` 与 `.cache/` 不进仓库（每台设备私有）。
+首次启动会自动安装依赖并构建。浏览器打开 http://localhost:5175 ，在页面引导里填入 API key 和你的 Obsidian 库路径即可开始。
+
+**获取微信读书 API key（每人自己的账号自己的 key）**：
+
+1. 手机打开**微信读书 App** → 「我」→ 设置
+2. 找到 **「微信读书 Skill」** 入口
+3. 生成/查看 API Key（`wrk-` 开头的一串）
+4. 粘贴到工作台设置里（保存在本机，不会上传到任何地方）
+
+注意：key 会过期。过期后界面会提示，重新获取一个、在设置里更换即可。
+
+## 隐私与安全
+
+- 所有笔记数据只写入**你自己的 Obsidian 库**，本工具不托管、不上传任何内容
+- API key 只保存在本机配置文件（已被 .gitignore 排除，永远不会进 git）
+- 除微信读书官方网关（i.weread.qq.com）和你本机的 claude CLI 外，不连接任何服务器；全部代码开源可审计
+
+## 多设备同步（可选）
+
+把本仓库和你的 Obsidian 库仓库克隆到**同一个父目录下并排放置**，配置默认按 `../` 相对路径找库，换设备无需改路径。开工前 `git pull`、收工后 `git push`（两个仓库都做）。划线/想法等服务器管理的内容在任何设备重新同步即自动收敛；git 真正保护的是你的💭思考、AI 批注等创作内容。`config.json` 与 `.cache/` 不进仓库（每台设备私有）。
 
 **命令行**：
 
