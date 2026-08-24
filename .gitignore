@@ -1,0 +1,16 @@
+# 依赖与构建产物（每台设备自行安装/构建）
+node_modules/
+web/node_modules/
+web/dist/
+
+# 运行缓存（默认全部忽略：热力图/共鸣数据可从 API 重拉）
+# 想让 AI 对话历史跨设备续接：取消下一行注释
+# !.cache/chats/
+.cache/*
+
+# 本机配置（vaultRoot 路径因设备而异，勿同步；模板见 config.example.json）
+config.json
+
+# 测试/调试遗留
+.ui-*.png
+*.log

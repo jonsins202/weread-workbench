@@ -1,0 +1,14 @@
+{
+  "vaultRoot": "../obsidian_cangku",
+  "notesRelDir": "微信读书笔记",
+  "attachmentsRelDir": "attachments",
+  "gateway": "https://i.weread.qq.com/api/agent/gateway",
+  "skillVersion": "1.0.5",
+  "requestDelayMs": 200,
+  "port": 5175,
+  "agent": {
+    "cli": "claude",
+    "timeoutMs": 180000,
+    "historyRounds": 20
+  }
+}

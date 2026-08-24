@@ -1,0 +1,21 @@
+{
+  "name": "weread-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "微信读书笔记工作台：同步 weread 笔记为 Obsidian 原生 Markdown（PRD 见 PRD.md）",
+  "scripts": {
+    "sync": "node server/cli.js",
+    "test": "node --test",
+    "start": "node server/index.js",
+    "build": "npm --prefix web run build",
+    "dev": "node --watch server/index.js",
+    "dev:web": "npm --prefix web run dev"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  }
+}
