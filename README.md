@@ -6,7 +6,7 @@
 
 ![笔记页 · 同段共鸣](docs/screenshot-note.png)
 
-配套文档：[项目说明.md](./项目说明.md)（架构/机制/规范/踩坑/维护，**最全**）· [PRD.md](./PRD.md)（产品需求）· [LICENSE](./LICENSE)（MIT）
+配套文档：[项目说明.md](./项目说明.md)（架构/机制/规范/踩坑/维护，**最全**）· [PRD.md](./PRD.md)（产品需求）· [AGENTS.md](./AGENTS.md)（给 AI 编码代理的项目上下文）· [CHANGELOG.md](./CHANGELOG.md) · [LICENSE](./LICENSE)（MIT）
 
 ## 快速开始
 
