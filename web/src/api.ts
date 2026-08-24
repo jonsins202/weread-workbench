@@ -32,6 +32,15 @@ export interface HeatmapData {
   range: { from: string; to: string };
 }
 
+export interface SetupStatus {
+  configured: boolean;
+  hasKey: boolean;
+  vaultRoot: string;
+  vaultOk: boolean;
+  looksLikeVault: boolean;
+  claudeAvailable: boolean;
+}
+
 const j = async (url: string, init?: RequestInit) => {
   const res = await fetch(url, init);
   const data = await res.json().catch(() => ({}));
@@ -103,5 +112,24 @@ export const api = {
   search: (q: string) => j(`/api/search?q=${encodeURIComponent(q)}`) as Promise<SearchHit[]>,
   heatmap: () => j("/api/stats/heatmap") as Promise<HeatmapData>,
   resonance: (file: string) => j(`/api/notes/${encodeURIComponent(file)}/resonance`) as Promise<ResonanceData>,
+  setupStatus: () => j("/api/setup/status") as Promise<SetupStatus>,
+  setupTestKey: (apiKey: string) =>
+    j("/api/setup/test-key", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ apiKey }),
+    }) as Promise<{ ok: boolean; books: number }>,
+  setupTestVault: (vaultRoot: string) =>
+    j("/api/setup/test-vault", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ vaultRoot }),
+    }) as Promise<{ ok: boolean; abs: string; looksLikeVault: boolean }>,
+  setupSave: (patch: { apiKey?: string; vaultRoot?: string }) =>
+    j("/api/setup/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    }) as Promise<SetupStatus>,
   syncStatus: () => j("/api/sync/status") as Promise<{ pending: Record<string, { serverTotal: number; localTotal: number }> }>,
 };

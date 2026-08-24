@@ -66,6 +66,24 @@ export async function bestBookmarks(bookId) {
   return call({ api_name: "/book/bestbookmarks", bookId });
 }
 
+/** 用指定 key 试连网关（设置向导的「测试连接」）：成功返回有笔记的书数 */
+export async function testGateway(apiKey) {
+  const cfg = load();
+  const res = await fetch(cfg.gateway, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ api_name: "/user/notebooks", count: 1, skill_version: cfg.skillVersion }),
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  if (data.errcode) throw new Error(`key 无效或已过期（errcode=${data.errcode}${data.errmsg ? " " + data.errmsg : ""}）`);
+  return data.totalBookCount ?? (data.books || []).length;
+}
+
 /** 指定划线范围下的公开想法（同段共鸣）；ranges 为字符串数组，每段取前 count 条 */
 export async function readReviews(bookId, chapterUid, ranges, count = 5) {
   return call({

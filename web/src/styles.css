@@ -337,3 +337,20 @@ h2 { font-size: 18px; }
   font-size: 12px; color: var(--sub); background: var(--card);
   border: 1px dashed var(--line); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px;
 }
+
+/* ---- 首次运行向导 / 设置页 ---- */
+.setup-page { display: flex; align-items: flex-start; justify-content: center; padding-top: 8vh; }
+.setup { width: 100%; max-width: 620px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px 30px; box-shadow: var(--shadow); }
+.setup-head h2 { margin: 0 0 4px; }
+.setup-step { margin-top: 20px; }
+.setup-step-title { font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.setup-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px;
+}
+.setup-row { display: flex; gap: 8px; }
+.setup-result { font-size: 13px; margin-top: 6px; }
+.setup-result.ok { color: var(--green); }
+.setup-result.err { color: var(--danger); }
+.setup-hint { font-size: 12px; color: var(--sub); margin-top: 6px; }
+.setup-actions { margin-top: 24px; display: flex; gap: 8px; }

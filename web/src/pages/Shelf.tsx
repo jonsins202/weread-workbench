@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api } from "../api";
 import type { ImportReport, SearchHit, HeatmapData } from "../api";
 import type { NoteMeta } from "../types";
+import Setup from "./Setup";
 
 /** ---- 阅读热力图（滚动一年，GitHub 风格）---- */
 function HeatmapCard() {
@@ -142,6 +143,8 @@ export default function Shelf({ onOpen }: { onOpen: (file: string, anchor?: stri
 
   // 旧笔记导入（F7）
   const [importOpen, setImportOpen] = useState(false);
+  // 设置（key 更换 / 库路径）
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [importPath, setImportPath] = useState("微信读书读书笔记_财经杂志/");
   const [importReport, setImportReport] = useState<ImportReport | null>(null);
   const [importBusy, setImportBusy] = useState(false);
@@ -306,6 +309,9 @@ export default function Shelf({ onOpen }: { onOpen: (file: string, anchor?: stri
           <button className="btn primary" disabled={syncing} onClick={() => doSync()}>
             {syncing ? "同步中…" : "全量同步"}
           </button>
+          <button className="btn" title="API key / 库路径 / AI 检测" onClick={() => setSettingsOpen(true)}>
+            ⚙
+          </button>
         </div>
       </header>
 
@@ -420,6 +426,16 @@ export default function Shelf({ onOpen }: { onOpen: (file: string, anchor?: stri
             </div>
           </div>
         </div>
+      )}
+
+      {settingsOpen && (
+        <Setup
+          mode="settings"
+          onDone={() => {
+            setSettingsOpen(false);
+            reload();
+          }}
+        />
       )}
 
       {importOpen && (

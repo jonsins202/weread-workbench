@@ -11,6 +11,7 @@ import { loadChat, appendChat, clearChat } from "./chats.js";
 import { analyzeImport, executeImport } from "./import.js";
 import { getHeatmap } from "./stats.js";
 import { getResonance } from "./social.js";
+import { getSetupStatus, testKey, testVault, saveSetup } from "./setup.js";
 import { syncAll } from "./sync.js";
 import { listNotebooks } from "./weread.js";
 
@@ -20,6 +21,39 @@ const PORT = cfg.port || 5175;
 
 const app = express();
 app.use(express.json({ limit: "2mb" }));
+
+// ---- 首次运行向导 / 设置（开源版：每用户自己的 key 与库路径）----
+app.get("/api/setup/status", async (req, res) => {
+  try {
+    res.json(await getSetupStatus());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post("/api/setup/test-key", async (req, res) => {
+  try {
+    res.json(await testKey(req.body?.apiKey));
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.post("/api/setup/test-vault", (req, res) => {
+  try {
+    res.json(testVault(req.body?.vaultRoot));
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.post("/api/setup/save", async (req, res) => {
+  try {
+    res.json(await saveSetup(req.body || {}));
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
 
 // ---- 笔记库 ----
 app.get("/api/notes", (req, res) => {
