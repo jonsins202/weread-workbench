@@ -14,3 +14,6 @@ config.json
 # 测试/调试遗留
 .ui-*.png
 *.log
+
+# 发布打包产物
+weread-workbench-v*.zip

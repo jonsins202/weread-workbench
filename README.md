@@ -2,6 +2,10 @@
 
 把微信读书的划线/想法同步为 **Obsidian 原生 Markdown 笔记**的本地 Web 应用：可视化书架、笔记阅读、二次编辑、AI 对话延伸、阅读热力图、同段读者共鸣。数据 100% 在你本地，这个工具只是你 Obsidian 库的「另一个窗口」。
 
+![书架页](docs/screenshot-shelf.png)
+
+![笔记页 · 同段共鸣](docs/screenshot-note.png)
+
 配套文档：[项目说明.md](./项目说明.md)（架构/机制/规范/踩坑/维护，**最全**）· [PRD.md](./PRD.md)（产品需求）· [LICENSE](./LICENSE)（MIT）
 
 ## 快速开始
@@ -11,7 +15,8 @@
 ```bash
 git clone https://github.com/jonsins202/weread-workbench.git
 cd weread-workbench
-双击 启动读书工作台.bat        # Windows；Mac/Linux 用 npm install && npm --prefix web install && npm --prefix web run build && npm start
+# Windows：双击 启动读书工作台.bat    Mac/Linux：./启动.sh
+# 也可以从 GitHub Releases 下载免构建压缩包（前端已构建好，解压后 npm install 即可）
 ```
 
 首次启动会自动安装依赖并构建。浏览器打开 http://localhost:5175 ，在页面引导里填入 API key 和你的 Obsidian 库路径即可开始。
@@ -30,6 +35,23 @@ cd weread-workbench
 - 所有笔记数据只写入**你自己的 Obsidian 库**，本工具不托管、不上传任何内容
 - API key 只保存在本机配置文件（已被 .gitignore 排除，永远不会进 git）
 - 除微信读书官方网关（i.weread.qq.com）和你本机的 claude CLI 外，不连接任何服务器；全部代码开源可审计
+
+## FAQ
+
+**key 过期了怎么办？**
+界面会提示同步失败。回到 微信读书 App 重新获取一个 key，在工作台右上角 ⚙ 设置里粘贴保存即可，其它都不用动。
+
+**和 treeboat 等导出类工具有什么区别？**
+导出类工具生成快照；本项目是持续的工作台——反复同步幂等（不产生重复块）、你在 Obsidian 里加的思考/AI 批注重同步永不丢失、有编辑器和 AI 对话。核心理念：.md 文件是唯一数据源，本工具随时可以不用，数据无损失。
+
+**我的笔记会被弄丢吗？**
+三层保障：同步只写入自管目录 `微信读书笔记/`（库内其它文件一概不碰）；所有写入前做字节级比较、原子落盘；你的批注/想法/AI callout 在重同步时原样保留（有专门的单元测试守着）。建议 Obsidian 库本身用 git 或网盘做版本备份。
+
+**支持什么系统？**
+Windows（双击 bat）/ macOS / Linux（./启动.sh）。AI 对话功能需要本机安装 Claude Code CLI，不装也能用其它全部功能。
+
+**端口 5175 被占用？**
+config.json 里改 `port` 字段。
 
 ## 多设备同步（可选）
 
